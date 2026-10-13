@@ -1,0 +1,16 @@
+
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+CREATE EXTENSION IF NOT EXISTS pg_net;
+
+ALTER TABLE public.email_log
+  ADD COLUMN IF NOT EXISTS html TEXT,
+  ADD COLUMN IF NOT EXISTS template TEXT,
+  ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ,
+  ADD COLUMN IF NOT EXISTS error TEXT,
+  ADD COLUMN IF NOT EXISTS attempts INT NOT NULL DEFAULT 0;
+
+CREATE INDEX IF NOT EXISTS email_log_status_idx ON public.email_log(status, created_at);
+
+ALTER TABLE public.appointments
+  ADD COLUMN IF NOT EXISTS reminder_24h_sent_at TIMESTAMPTZ,
+  ADD COLUMN IF NOT EXISTS reminder_2h_sent_at TIMESTAMPTZ;

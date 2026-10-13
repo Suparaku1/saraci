@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://oxcpxotmuegovgtmetii.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "saraci-dental-mcp",
+      "version": "0.1.0",
+      "title": "Saraci Dental Clinic"
+    },
+    "tools": [
+      {
+        "name": "list_services",
+        "title": "List clinic services",
+        "description": "List all available dental services at Saraci Dental Clinic with prices and durations.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_availability",
+        "title": "Get available appointment slots",
+        "description": "Return available 1-hour slots for the given date range. Dates are ISO strings (UTC). Clinic hours: Mon-Sat 09:00-19:00 Europe/Tirane; closed Sunday.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string",
+              "description": "Start ISO datetime (UTC)."
+            },
+            "to": {
+              "type": "string",
+              "description": "End ISO datetime (UTC)."
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_booking",
+        "title": "Create an appointment",
+        "description": "Book a 1-hour appointment for the signed-in user. slotIso must be a whole-hour UTC ISO datetime within clinic hours (Mon-Sat 09:00-19:00 Europe/Tirane). All patient fields are required.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "slotIso": {
+              "type": "string",
+              "description": "UTC ISO datetime of the slot start."
+            },
+            "firstName": {
+              "type": "string",
+              "minLength": 2
+            },
+            "lastName": {
+              "type": "string",
+              "minLength": 2
+            },
+            "patientPhone": {
+              "type": "string",
+              "description": "Must start with 06 and be 10 digits"
+            },
+            "patientEmail": {
+              "type": "string",
+              "description": "Valid email address"
+            },
+            "service": {
+              "type": "string",
+              "minLength": 3
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "slotIso",
+            "firstName",
+            "lastName",
+            "patientPhone",
+            "patientEmail",
+            "service"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "cancel_booking",
+        "title": "Cancel an appointment",
+        "description": "Cancel an existing appointment by its booking code. Only the owner can cancel.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "bookingCode": {
+              "type": "string",
+              "minLength": 3,
+              "description": "The 6-8 char booking code (e.g. AB12CD)."
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "bookingCode"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_appointments",
+        "title": "List my appointments",
+        "description": "List all appointments for the signed-in user, newest first.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

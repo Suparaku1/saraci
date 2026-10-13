@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_authenticated/
+Disallow: /auth
+Sitemap: https://saracidental.al/sitemap.xml
