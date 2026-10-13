@@ -154,23 +154,28 @@ function AuthPage() {
   }
 
 
-  async function onGoogle() {
-    setLoading(true);
-    try {
-      const { lovable } = await import("@/integrations/lovable/index");
-      const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin,
-      });
-      if (result.error) return toast.error("Hyrja me Google dështoi.");
-      if ("redirected" in result && result.redirected) return;
-      const becameStaff = await claimPendingStaff();
-      toast.success("Mirë se erdhe!");
-      if (becameStaff) return nav({ to: "/admin" });
-      goNext();
-    } finally {
-      setLoading(false);
+  
+    async function onGoogle() {
+      setLoading(true);
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: `${window.location.origin}/auth`,
+          },
+        });
+
+        if (error) {
+          toast.error(`Hyrja me Google dështoi: ${error.message}`);
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        toast.error(`Hyrja me Google dështoi: ${message}`);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
+
 
   return (
     <div className="min-h-screen bg-hero-gradient grid place-items-center px-4 py-10">
