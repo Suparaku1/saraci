@@ -9,7 +9,7 @@ export const Route = createFileRoute("/api/public/hooks/send-reminders")({
     handlers: {
       POST: async ({ request }) => {
         const { assertCronRequest } = await import("@/lib/cron-auth.server");
-        const denied = assertCronRequest(request);
+        const denied = await assertCronRequest(request);
         if (denied) return denied;
 
         const admin = createClient<Database>(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
@@ -44,20 +44,28 @@ export const Route = createFileRoute("/api/public/hooks/send-reminders")({
         for (const a of r24 ?? []) {
           if (!a.patient_email) continue;
           const t = tplReminder({ name: a.patient_name, code: a.booking_code, slotIso: a.slot_start, hoursBefore: 24 });
-          await admin.from("email_log").insert({
+          const { error: queueError } = await admin.from("email_log").insert({
             to_email: a.patient_email, subject: t.subject, body: `Kujtesë 24h · ${a.booking_code}`,
             html: t.html, template: "reminder_24h", related_appointment: a.id,
           });
+          if (queueError) {
+            console.error("Reminder enqueue failed:", queueError.message);
+            continue;
+          }
           await admin.from("appointments").update({ reminder_24h_sent_at: new Date().toISOString() }).eq("id", a.id);
           queued++;
         }
         for (const a of r2 ?? []) {
           if (!a.patient_email) continue;
           const t = tplReminder({ name: a.patient_name, code: a.booking_code, slotIso: a.slot_start, hoursBefore: 2 });
-          await admin.from("email_log").insert({
+          const { error: queueError } = await admin.from("email_log").insert({
             to_email: a.patient_email, subject: t.subject, body: `Kujtesë 2h · ${a.booking_code}`,
             html: t.html, template: "reminder_2h", related_appointment: a.id,
           });
+          if (queueError) {
+            console.error("Reminder enqueue failed:", queueError.message);
+            continue;
+          }
           await admin.from("appointments").update({ reminder_2h_sent_at: new Date().toISOString() }).eq("id", a.id);
           queued++;
         }

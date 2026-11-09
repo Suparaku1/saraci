@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793529607220,
+      "tag": "0000_audit_auth_and_calendar_privacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793630427930,
+      "tag": "0001_private_job_config",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793813302031,
+      "tag": "0002_gallery_and_reviews",
+      "breakpoints": true
+    }
+  ]
+}

@@ -27,7 +27,7 @@ type SB = any;
 async function queue(supabase: SB, rows: Record<string, unknown>[]) {
   if (rows.length === 0) return;
   const { error } = await supabase.from("email_log").insert(rows);
-  if (error) console.error("email_log insert failed:", error.message, JSON.stringify(rows.map((r) => r["to_email"])));
+  if (error) console.error("email_log insert failed:", error.message, `rows=${rows.length}`);
 }
 
 export async function notifyBookingCreated(supabase: SB, appt: Appt) {

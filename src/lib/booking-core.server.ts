@@ -55,14 +55,12 @@ async function assertFreeSlot(sb: SB, slotIso: string) {
   const start = new Date(slotIso);
   if (start <= new Date()) throw new Error("Zgjidhni një orar të ardhshëm.");
   const end = new Date(start.getTime() + SLOT_MS);
-  const { data: block } = await sb
-    .from("calendar_blocks")
-    .select("id")
-    .lt("start_ts", end.toISOString())
-    .gt("end_ts", start.toISOString())
-    .limit(1)
-    .maybeSingle();
-  if (block) throw new Error("Ky orar është bllokuar në kalendarin e klinikës. Zgjidhni një orar tjetër.");
+  const { data: blocks, error } = await sb.rpc("get_calendar_block_ranges", {
+    range_start: start.toISOString(),
+    range_end: end.toISOString(),
+  });
+  if (error) throw new Error(error.message);
+  if (blocks?.length) throw new Error("Ky orar është bllokuar në kalendarin e klinikës. Zgjidhni një orar tjetër.");
 }
 
 export async function createBookingCore(sb: SB, userId: string, input: CreateInput, source: BookingSource) {

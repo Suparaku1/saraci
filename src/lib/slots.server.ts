@@ -17,7 +17,7 @@ function localParts(d: Date) {
     month: "2-digit",
     day: "2-digit",
   }).formatToParts(d);
-  const get = (t: string) => parts.find((p) => p.type === t)!.value;
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "";
   return { y: get("year"), mo: get("month"), d: get("day") };
 }
 
@@ -89,11 +89,11 @@ export async function loadSlots(supabase: any, from: Date | string, to: Date | s
     .gte("slot_start", start.toISOString())
     .lte("slot_start", end.toISOString());
   if (error) throw new Error(error.message);
-  const { data: blocks } = await supabase
-    .from("calendar_blocks")
-    .select("start_ts, end_ts")
-    .lt("start_ts", end.toISOString())
-    .gt("end_ts", start.toISOString());
+  const { data: blocks, error: blockError } = await supabase.rpc("get_calendar_block_ranges", {
+    range_start: start.toISOString(),
+    range_end: end.toISOString(),
+  });
+  if (blockError) throw new Error(blockError.message);
   return enumerateSlots({
     from: start,
     to: end,

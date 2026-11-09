@@ -1,0 +1,16 @@
+import { o as __toESM } from "../_runtime.mjs";
+import { t as cn } from "./utils-DWGjSd5x.mjs";
+import { o as require_jsx_runtime, s as require_react } from "../_libs/@ai-sdk/react+[...].mjs";
+import { t as cva } from "../_libs/class-variance-authority+clsx.mjs";
+import { t as Label$1 } from "../_libs/radix-ui__react-label.mjs";
+// node_modules/.nitro/vite/services/ssr/assets/label-BYIfJH-v.js
+var import_react = /* @__PURE__ */ __toESM(require_react());
+var import_jsx_runtime = require_jsx_runtime();
+var labelVariants = cva("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70");
+var Label = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label$1, {
+	ref,
+	className: cn(labelVariants(), className),
+	...props
+}));
+Label.displayName = Label$1.displayName;
+export { Label as t };

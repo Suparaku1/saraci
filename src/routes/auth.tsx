@@ -19,7 +19,14 @@ export const Route = createFileRoute("/auth")({
     mode: s.mode === "register" ? "register" : "login",
     next: typeof s.next === "string" && s.next.startsWith("/") && !s.next.startsWith("//") ? s.next : undefined,
   }),
-  head: () => ({ meta: [{ title: "Hyr — Saraci Dental" }] }),
+  head: () => ({ meta: [
+    { title: "Hyr me email — Saraci Dental Clinic" },
+    { name: "description", content: "Hyni ose regjistrohuni me email dhe fjalëkalim në Saraci Dental Clinic." },
+    { property: "og:title", content: "Hyr me email — Saraci Dental Clinic" },
+    { property: "og:description", content: "Hyrja e pacientëve dhe stafit në Saraci Dental Clinic." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: AuthPage,
 });
 
@@ -57,7 +64,7 @@ function AuthPage() {
     const phone = String(f.get("phone") ?? "");
     const companyRole = String(f.get("company_role") ?? "");
     const { data: signUpData, error } = await supabase.auth.signUp({
-      email: String(f.get("email")),
+      email: String(f.get("email")).trim().toLowerCase(),
       password: String(f.get("password")),
       options: {
         emailRedirectTo: window.location.origin + "/auth",
@@ -116,7 +123,7 @@ function AuthPage() {
     setLoading(true);
     const f = new FormData(e.currentTarget);
     const { error } = await supabase.auth.signInWithPassword({
-      email: String(f.get("email")),
+      email: String(f.get("email")).trim().toLowerCase(),
       password: String(f.get("password")),
     });
     if (error) {
@@ -134,9 +141,9 @@ function AuthPage() {
     e.preventDefault();
     setLoading(true);
     const f = new FormData(e.currentTarget);
-    const redirectBack = search.next ? window.location.origin + search.next : window.location.origin;
-    const { error } = await supabase.auth.signUp({
-      email: String(f.get("email")),
+    const redirectBack = window.location.origin + "/auth";
+    const { data, error } = await supabase.auth.signUp({
+      email: String(f.get("email")).trim().toLowerCase(),
       password: String(f.get("password")),
       options: {
         emailRedirectTo: redirectBack,
@@ -149,32 +156,14 @@ function AuthPage() {
     });
     setLoading(false);
     if (error) return toast.error("Regjistrimi dështoi: " + error.message);
-    toast.success("Llogaria u krijua! Duke hyrë...");
+    if (!data.session) {
+      toast.success("Konfirmoni emailin përpara se të hyni në llogari.");
+      setTab("login");
+      return;
+    }
+    toast.success("Llogaria u krijua!");
     goNext();
   }
-
-
-  
-    async function onGoogle() {
-      setLoading(true);
-      try {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: "google",
-          options: {
-            redirectTo: `${window.location.origin}/auth`,
-          },
-        });
-
-        if (error) {
-          toast.error(`Hyrja me Google dështoi: ${error.message}`);
-        }
-      } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        toast.error(`Hyrja me Google dështoi: ${message}`);
-      } finally {
-        setLoading(false);
-      }
-    }
 
 
   return (
@@ -185,21 +174,6 @@ function AuthPage() {
           <span className="font-display text-xl font-semibold">Saraci Dental</span>
         </Link>
         <Card className="p-6 shadow-xl">
-          <Button variant="outline" className="w-full mb-4" onClick={onGoogle} disabled={loading}>
-            <svg className="w-4 h-4 mr-2" viewBox="0 0 48 48" aria-hidden="true">
-              <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.6 30.1 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.2 17.6 9.5 24 9.5z" />
-              <path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-2.8-.4-4.1H24v8.3h12.6c-.3 2.1-1.6 5.2-4.7 7.3l7.6 5.9c4.5-4.2 6.6-10.3 6.6-17.4z" />
-              <path fill="#FBBC05" d="M10.4 28.7A14.6 14.6 0 0 1 9.6 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.8-6.1z" />
-              <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.8-5.9l-7.6-5.9c-2 1.4-4.8 2.4-8.2 2.4-6.4 0-11.7-3.7-13.6-9.9l-7.8 6.1C6.5 42.6 14.6 48 24 48z" />
-            </svg>
-            Vazhdo me Google
-          </Button>
-          <div className="relative mb-4">
-            <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">ose me email</span>
-            </div>
-          </div>
           <Tabs value={tab} onValueChange={(v) => setTab(v as "login" | "register" | "staf")}>
             <TabsList className="grid grid-cols-3 w-full">
               <TabsTrigger value="login">Hyr</TabsTrigger>

@@ -28,13 +28,13 @@ const CLINIC = {
   email: "xhensilasaraci@gmail.com",
   dentist: "Dr. Xhensila Saraci",
   photos: {
-    hero: heroAsset,
-    room: galleryRoom,
-    team: galleryTeam,
-    team2: galleryTeam2,
-    treatment: galleryTreatment,
-    whitening: galleryWhitening,
-    office: galleryOffice,
+    hero: heroAsset.url,
+    room: galleryRoom.url,
+    team: galleryTeam.url,
+    team2: galleryTeam2.url,
+    treatment: galleryTreatment.url,
+    whitening: galleryWhitening.url,
+    office: galleryOffice.url,
   },
 };
 
@@ -42,7 +42,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Dentist",
   name: CLINIC.name,
-  image: heroAsset,
+  image: heroAsset.url,
   url: SITE_URL,
   telephone: CLINIC.phone,
   email: CLINIC.email,
@@ -75,12 +75,12 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Rezervo terminin online. Chat & voice agjent në shqip. Hën–Sht 09–19." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
-      { property: "og:image", content: heroAsset },
+      { property: "og:image", content: heroAsset.url },
       { property: "og:locale", content: "sq_AL" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Saraci Dental Clinic — Elbasan" },
       { name: "twitter:description", content: "Klinika juaj dentare në Elbasan. Rezervo online." },
-      { name: "twitter:image", content: heroAsset },
+      { name: "twitter:image", content: heroAsset.url },
     ],
     links: [{ rel: "canonical", href: SITE_URL }],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],
@@ -92,6 +92,9 @@ function PublicHeader() {
   const [open, setOpen] = useState(false);
   const links = [
     ["/sherbimet", "Shërbimet"],
+    ["/cmimet", "Çmimet"],
+    ["/galeria", "Para/pas"],
+    ["/recensionet", "Recensionet"],
     ["/rreth", "Rreth nesh"],
     ["/faq", "Pyetje"],
     ["/kontakt", "Kontakt"],
@@ -303,9 +306,13 @@ function Landing() {
             </div>
             <h2 className="mt-3 font-display text-2xl">Vlerësimet e pacientëve</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Lexoni përvojat e pacientëve tanë në Google ose lini vlerësimin tuaj pas vizitës.
+              Lexoni përvojat e pacientëve tanë ose lini vlerësimin tuaj pas vizitës.
               Ne nuk publikojmë dëshmi pa pëlqimin e pacientit.
             </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Link to="/recensionet"><Button className="gap-2">Lexo recensionet <ArrowRight className="w-4 h-4" /></Button></Link>
+              <Link to="/galeria"><Button variant="outline">Para / pas</Button></Link>
+            </div>
             <a
               href="https://www.google.com/maps/search/?api=1&query=Saraci+Dental+Clinic+Elbasan"
               target="_blank"

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/api/public/hooks/process-emails")({
     handlers: {
       POST: async ({ request }) => {
         const { assertCronRequest } = await import("@/lib/cron-auth.server");
-        const denied = assertCronRequest(request);
+        const denied = await assertCronRequest(request);
         if (denied) return denied;
 
         const url = process.env.SUPABASE_URL!;

@@ -286,6 +286,17 @@ function BookingBody() {
             </div>
           )}
           <DialogFooter className="gap-2">
+            {confirmation && (
+              <a
+                href={`https://wa.me/355675402044?text=${encodeURIComponent(
+                  `Përshëndetje Saraci Dental! Kam rezervuar një termin.\nKodi: ${confirmation.code}\nData: ${new Date(confirmation.slot).toLocaleString("sq-AL", { timeZone: "Europe/Tirane", dateStyle: "full", timeStyle: "short" })}${confirmation.service ? `\nShërbimi: ${confirmation.service}` : ""}`,
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="outline" className="w-full">Njofto në WhatsApp</Button>
+              </a>
+            )}
             <Button variant="outline" onClick={() => window.print()}>Printo</Button>
             <Button onClick={() => { setConfirmation(null); nav({ to: "/historia" }); }}>Shko te Historia</Button>
           </DialogFooter>

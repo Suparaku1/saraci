@@ -11,7 +11,7 @@ export const Route = createFileRoute("/api/public/hooks/calendar-sync")({
     handlers: {
       POST: async ({ request }) => {
         const { assertCronRequest } = await import("@/lib/cron-auth.server");
-        const denied = assertCronRequest(request);
+        const denied = await assertCronRequest(request);
         if (denied) return denied;
 
         const cal = await import("@/lib/calendar.server");

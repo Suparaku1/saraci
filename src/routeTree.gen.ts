@@ -12,11 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CmimetRouteImport } from './routes/cmimet'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as GaleriaRouteImport } from './routes/galeria'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as KushtetRouteImport } from './routes/kushtet'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as PrivatesiaRouteImport } from './routes/privatesia'
+import { Route as RecensionetRouteImport } from './routes/recensionet'
 import { Route as RrethRouteImport } from './routes/rreth'
 import { Route as SherbimetRouteImport } from './routes/sherbimet'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
@@ -52,9 +55,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CmimetRoute = CmimetRouteImport.update({
+  id: '/cmimet',
+  path: '/cmimet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GaleriaRoute = GaleriaRouteImport.update({
+  id: '/galeria',
+  path: '/galeria',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontaktRoute = KontaktRouteImport.update({
@@ -75,6 +88,11 @@ const McpRoute = McpRouteImport.update({
 const PrivatesiaRoute = PrivatesiaRouteImport.update({
   id: '/privatesia',
   path: '/privatesia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecensionetRoute = RecensionetRouteImport.update({
+  id: '/recensionet',
+  path: '/recensionet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RrethRoute = RrethRouteImport.update({
@@ -187,11 +205,14 @@ const ApiPublicHooksSendRemindersRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cmimet': typeof CmimetRoute
   '/faq': typeof FaqRoute
+  '/galeria': typeof GaleriaRoute
   '/kontakt': typeof KontaktRoute
   '/kushtet': typeof KushtetRoute
   '/mcp': typeof McpRoute
   '/privatesia': typeof PrivatesiaRoute
+  '/recensionet': typeof RecensionetRoute
   '/rreth': typeof RrethRoute
   '/sherbimet': typeof SherbimetRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -216,11 +237,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cmimet': typeof CmimetRoute
   '/faq': typeof FaqRoute
+  '/galeria': typeof GaleriaRoute
   '/kontakt': typeof KontaktRoute
   '/kushtet': typeof KushtetRoute
   '/mcp': typeof McpRoute
   '/privatesia': typeof PrivatesiaRoute
+  '/recensionet': typeof RecensionetRoute
   '/rreth': typeof RrethRoute
   '/sherbimet': typeof SherbimetRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -247,11 +271,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/cmimet': typeof CmimetRoute
   '/faq': typeof FaqRoute
+  '/galeria': typeof GaleriaRoute
   '/kontakt': typeof KontaktRoute
   '/kushtet': typeof KushtetRoute
   '/mcp': typeof McpRoute
   '/privatesia': typeof PrivatesiaRoute
+  '/recensionet': typeof RecensionetRoute
   '/rreth': typeof RrethRoute
   '/sherbimet': typeof SherbimetRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -278,11 +305,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/cmimet'
     | '/faq'
+    | '/galeria'
     | '/kontakt'
     | '/kushtet'
     | '/mcp'
     | '/privatesia'
+    | '/recensionet'
     | '/rreth'
     | '/sherbimet'
     | '/.mcp/list-tools'
@@ -307,11 +337,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/cmimet'
     | '/faq'
+    | '/galeria'
     | '/kontakt'
     | '/kushtet'
     | '/mcp'
     | '/privatesia'
+    | '/recensionet'
     | '/rreth'
     | '/sherbimet'
     | '/.mcp/list-tools'
@@ -337,11 +370,14 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/cmimet'
     | '/faq'
+    | '/galeria'
     | '/kontakt'
     | '/kushtet'
     | '/mcp'
     | '/privatesia'
+    | '/recensionet'
     | '/rreth'
     | '/sherbimet'
     | '/.mcp/list-tools'
@@ -368,11 +404,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  CmimetRoute: typeof CmimetRoute
   FaqRoute: typeof FaqRoute
+  GaleriaRoute: typeof GaleriaRoute
   KontaktRoute: typeof KontaktRoute
   KushtetRoute: typeof KushtetRoute
   McpRoute: typeof McpRoute
   PrivatesiaRoute: typeof PrivatesiaRoute
+  RecensionetRoute: typeof RecensionetRoute
   RrethRoute: typeof RrethRoute
   SherbimetRoute: typeof SherbimetRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
@@ -409,11 +448,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cmimet': {
+      id: '/cmimet'
+      path: '/cmimet'
+      fullPath: '/cmimet'
+      preLoaderRoute: typeof CmimetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/faq': {
       id: '/faq'
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/galeria': {
+      id: '/galeria'
+      path: '/galeria'
+      fullPath: '/galeria'
+      preLoaderRoute: typeof GaleriaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kontakt': {
@@ -442,6 +495,13 @@ declare module '@tanstack/react-router' {
       path: '/privatesia'
       fullPath: '/privatesia'
       preLoaderRoute: typeof PrivatesiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recensionet': {
+      id: '/recensionet'
+      path: '/recensionet'
+      fullPath: '/recensionet'
+      preLoaderRoute: typeof RecensionetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rreth': {
@@ -618,11 +678,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  CmimetRoute: CmimetRoute,
   FaqRoute: FaqRoute,
+  GaleriaRoute: GaleriaRoute,
   KontaktRoute: KontaktRoute,
   KushtetRoute: KushtetRoute,
   McpRoute: McpRoute,
   PrivatesiaRoute: PrivatesiaRoute,
+  RecensionetRoute: RecensionetRoute,
   RrethRoute: RrethRoute,
   SherbimetRoute: SherbimetRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,

@@ -28,8 +28,19 @@ export const Route = createFileRoute("/api/chat")({
         const userId = claims.claims.sub;
 
         const body = await request.json() as { messages: UIMessage[]; sessionId?: string };
-        const { messages, sessionId } = body;
-        if (!Array.isArray(messages)) return new Response("Bad request", { status: 400 });
+        const { sessionId } = body;
+        if (!Array.isArray(body.messages)) return new Response("Bad request", { status: 400 });
+        // Only the user's own messages are trusted from the request; earlier assistant
+        // replies are rebuilt from the saved conversation so they cannot be invented.
+        const incomingUser = body.messages.filter((m) => m && m.role === "user").slice(-1);
+        let messages: UIMessage[] = incomingUser;
+        if (sessionId) {
+          const { data: hist } = await supabase.from("chat_messages")
+            .select("id, role, content").eq("session_id", sessionId)
+            .in("role", ["user", "assistant"]).order("created_at", { ascending: true }).limit(40);
+          const prior = (hist ?? []).map((h) => ({ id: h.id, role: h.role as "user" | "assistant", parts: [{ type: "text" as const, text: h.content }] })) as UIMessage[];
+          messages = [...prior, ...incomingUser];
+        }
 
         // Load clinic settings (public + private if admin)
         const { data: isAdminRow } = await supabase.from("user_roles").select("role").eq("user_id", userId).eq("role", "admin").maybeSingle();

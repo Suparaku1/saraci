@@ -180,6 +180,42 @@ export type Database = {
         }
         Relationships: []
       }
+      before_after: {
+        Row: {
+          after_path: string
+          before_path: string
+          consent_confirmed: boolean
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          published: boolean
+          title: string
+        }
+        Insert: {
+          after_path: string
+          before_path: string
+          consent_confirmed?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          published?: boolean
+          title: string
+        }
+        Update: {
+          after_path?: string
+          before_path?: string
+          consent_confirmed?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          published?: boolean
+          title?: string
+        }
+        Relationships: []
+      }
       calendar_blocks: {
         Row: {
           created_at: string
@@ -584,6 +620,21 @@ export type Database = {
           },
         ]
       }
+      private_job_config: {
+        Row: {
+          key: string
+          value: string
+        }
+        Insert: {
+          key: string
+          value: string
+        }
+        Update: {
+          key?: string
+          value?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           city: string | null
@@ -626,6 +677,36 @@ export type Database = {
           phone?: string | null
           tags?: string[] | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          approved: boolean
+          comment: string
+          created_at: string
+          display_name: string
+          id: string
+          rating: number
+          user_id: string
+        }
+        Insert: {
+          approved?: boolean
+          comment: string
+          created_at?: string
+          display_name: string
+          id?: string
+          rating: number
+          user_id?: string
+        }
+        Update: {
+          approved?: boolean
+          comment?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          rating?: number
+          user_id?: string
         }
         Relationships: []
       }
@@ -755,6 +836,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_calendar_block_ranges: {
+        Args: { range_end: string; range_start: string }
+        Returns: {
+          end_ts: string
+          start_ts: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

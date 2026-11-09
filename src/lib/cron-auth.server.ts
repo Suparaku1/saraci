@@ -1,9 +1,16 @@
 // Autentikimi i endpoint-eve cron (/api/public/hooks/*).
-// Përdoret një secret i dedikuar CRON_SECRET — jo apikey publike e klientit.
-export function assertCronRequest(request: Request): Response | null {
-  const expected = process.env.CRON_SECRET;
-  if (!expected) return new Response("Cron secret not configured", { status: 503 });
+// Çelësi ruhet vetëm në databazë (private_job_config, pa akses klienti) — kurrë në kod.
+export async function assertCronRequest(request: Request): Promise<Response | null> {
   const provided = request.headers.get("x-cron-secret") ?? "";
+  if (!provided) return new Response("Unauthorized", { status: 401 });
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data } = await supabaseAdmin
+    .from("private_job_config")
+    .select("value")
+    .eq("key", "cron_secret")
+    .maybeSingle();
+  const expected = data?.value;
+  if (!expected) return new Response("Cron secret not configured", { status: 503 });
   if (!timingSafeEqualStr(provided, expected)) return new Response("Unauthorized", { status: 401 });
   return null;
 }

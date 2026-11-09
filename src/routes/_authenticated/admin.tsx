@@ -21,6 +21,7 @@ import {
   adminUpdateService,
   adminDeleteService,
 } from "@/lib/admin.functions";
+import { GalleryAdmin, ReviewsAdmin } from "@/components/admin/GalleryReviewsAdmin";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — Saraci Dental" }] }),
@@ -34,7 +35,9 @@ function toCSV(rows: any[]): string {
   const headers = Object.keys(rows[0]);
   const esc = (v: any) => {
     if (v == null) return "";
-    const s = String(v).replace(/"/g, '""');
+    let s = String(v);
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    s = s.replace(/"/g, '""');
     return /[",\n]/.test(s) ? `"${s}"` : s;
   };
   return [headers.join(","), ...rows.map((r) => headers.map((h) => esc(r[h])).join(","))].join("\n");
@@ -241,6 +244,8 @@ function AdminPage() {
           <TabsTrigger value="emails"><Mail className="w-4 h-4 mr-1" /> Email</TabsTrigger>
           <TabsTrigger value="services"><Stethoscope className="w-4 h-4 mr-1" /> Shërbimet</TabsTrigger>
           <TabsTrigger value="conn" onClick={() => !conn && loadConn()}><Plug className="w-4 h-4 mr-1" /> Lidhjet</TabsTrigger>
+          <TabsTrigger value="gallery">Para/pas</TabsTrigger>
+          <TabsTrigger value="reviews">Recensionet</TabsTrigger>
           <TabsTrigger value="settings"><Settings2 className="w-4 h-4 mr-1" /> Cilësimet</TabsTrigger>
         </TabsList>
 
@@ -371,6 +376,9 @@ function AdminPage() {
             {emails.length === 0 && <p className="text-sm text-muted-foreground">Nuk ka email të dërguar akoma.</p>}
           </Card>
         </TabsContent>
+
+        <TabsContent value="gallery"><GalleryAdmin /></TabsContent>
+        <TabsContent value="reviews"><ReviewsAdmin /></TabsContent>
 
         <TabsContent value="settings">
           <Card className="p-4 space-y-3">

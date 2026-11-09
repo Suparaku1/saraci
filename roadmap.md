@@ -1,7 +1,13 @@
 # Saraci Dental — Roadmap (audit 02.09.2026)
 
+## Audit 01.11.2026 — databaza dhe hyrja
+- [x] Krahaso historinë me llogaritë, rolet, rregullat dhe njoftimet aktuale.
+- [x] Aktivizo dhe provo hyrjen me fjalëkalim për gjashtë llogaritë e kërkuara.
+- [x] Rregullime prioritare dhe kufijtë e auditit dokumentuar në audit-2026-11-01.md.
+- [ ] Përfundo auditin e thelluar — pritet rezultati i skanimit të sigurisë.
+
 ## Faza A — Siguri & bllokues (kritike)
-- [~] Krijo rol `admin` (pritet konfirmim: cila llogari) (0 admin në DB → paneli i papërdorshëm)
+- [x] Rolet admin ekzistojnë; verifikuar hyrja e orarishpe në panel (01.11.2026).
 - [x] Zëvendëso `apikey === SUPABASE_PUBLISHABLE_KEY` në `/api/public/hooks/*` me `CRON_SECRET`
 - [x] Mbroj `/api/public/hooks/errors` (rate-limit + kufizim gjatësie)
 - [x] Retention për `calendar_sync_log` / `email_log` / `error_log` (8k+ rreshta log)

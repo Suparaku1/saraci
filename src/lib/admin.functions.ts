@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
+import { complaintUpdateSchema } from "@/lib/admin-validation";
 
 // Every admin write goes through here: the role is verified on the server,
 // never inferred from the browser.
@@ -27,6 +28,20 @@ export const adminUpdateAppointmentStatus = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await assertAdmin(supabase, userId);
+    if (data.status === "cancelled") {
+      const { data: appointment, error: readError } = await supabase.from("appointments")
+        .select("*").eq("id", data.id).single();
+      if (readError) throw new Error(readError.message);
+      if (appointment.status !== "booked") throw new Error("Ky rezervim nuk është aktiv.");
+      const { cancelBookingCore } = await import("@/lib/booking-core.server");
+      await cancelBookingCore(supabase, appointment.user_id ?? userId, {
+        bookingCode: appointment.booking_code,
+        verify: appointment.patient_email ?? appointment.patient_phone,
+        reason: "Anuluar nga administratori",
+      }, "web");
+      await audit(supabase, userId, "admin.appointment.status", "appointment", data.id, { status: data.status });
+      return { ok: true };
+    }
     const { error } = await supabase.from("appointments").update({ status: data.status }).eq("id", data.id);
     if (error) throw new Error(error.message);
     await audit(supabase, userId, "admin.appointment.status", "appointment", data.id, { status: data.status });
@@ -35,20 +50,12 @@ export const adminUpdateAppointmentStatus = createServerFn({ method: "POST" })
 
 export const adminUpdateComplaint = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
-    z.object({
-      id: z.string().uuid(),
-      status: z.string().min(2).optional(),
-      resolution: z.string().max(4000).optional(),
-    }).parse(raw),
-  )
+  .inputValidator((raw: unknown) => complaintUpdateSchema.parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await assertAdmin(supabase, userId);
-    const patch: { status?: string; resolution?: string } = {};
-    if (data.status !== undefined) patch.status = data.status;
-    if (data.resolution !== undefined) patch.resolution = data.resolution;
-    const { error } = await supabase.from("complaints").update(patch as never).eq("id", data.id);
+    const { id, ...patch } = data;
+    const { error } = await supabase.from("complaints").update(patch).eq("id", id);
     if (error) throw new Error(error.message);
     await audit(supabase, userId, "admin.complaint.update", "complaint", data.id, patch);
     return { ok: true };
