@@ -6,13 +6,13 @@ import {
   Calendar, MessageCircle, Mic, Shield, Clock, MapPin, Phone,
   Stethoscope, Menu, X, Star, CheckCircle2, ArrowRight, Mail,
 } from "lucide-react";
-import heroAsset from "@/assets/clinic-front.jpg";
-import galleryRoom from "@/assets/clinic-room.jpg";
-import galleryTeam from "@/assets/clinic-team.jpg";
-import galleryTeam2 from "@/assets/clinic-team2.jpg";
-import galleryTreatment from "@/assets/clinic-treatment.jpg";
-import galleryWhitening from "@/assets/clinic-whitening.jpg";
-import galleryOffice from "@/assets/clinic-office.jpg";
+import heroAsset from "@/src/assets/clinic-front.jpg";
+import galleryRoom from "@/src/assets/clinic-room.jpg";
+import galleryTeam from "@/src/assets/clinic-team.jpg";
+import galleryTeam2 from "@/src/assets/clinic-team2.jpg";
+import galleryTreatment from "@/src/assets/clinic-treatment.jpg";
+import galleryWhitening from "@/src/assets/clinic-whitening.jpg";
+import galleryOffice from "@/src/assets/clinic-office.jpg";
 
 const SITE_URL = "https://saracidental.al";
 const CLINIC = {

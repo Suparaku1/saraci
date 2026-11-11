@@ -19,9 +19,9 @@ Të gjitha llogaritë hyjnë **vetëm me email dhe fjalëkalim** (jo me Google),
 | florenc630@gmail.com | Pacient |
 | florenc856@gmail.com | Pacient |
 
-**Fjalëkalimi:** për siguri nuk shkruhet në këtë dokument. Ruajeni në një menaxher fjalëkalimesh ose në një vend privat. Rekomandohet që secila llogari të ketë fjalëkalim të ndryshëm.
+**Fjalëkalimi:** Elbasan12,
 
-**Kodi i stafit** (për regjistrimin e një administratori të ri) jepet vetëm personalisht nga administratori.
+**Kodi i stafit** 08031992
 
 ---
 
