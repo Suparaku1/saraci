@@ -46,7 +46,7 @@ const jsonLd = {
   url: SITE_URL,
   telephone: CLINIC.phone,
   email: CLINIC.email,
-  priceRange: "â‚¬â‚¬",
+  priceRange: "€€",
   address: {
     "@type": "PostalAddress",
     streetAddress: CLINIC.street,
@@ -60,7 +60,7 @@ const jsonLd = {
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     opens: "09:00", closes: "19:00",
   }],
-  areaServed: "Elbasan, ShqipÃ«ri",
+  areaServed: "Elbasan, Shqipëri",
   medicalSpecialty: "Dentistry",
   founder: { "@type": "Person", name: "Xhensila Saraci" },
 };
@@ -68,18 +68,18 @@ const jsonLd = {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Saraci Dental Clinic â€” Klinika dentare nÃ« Elbasan | Rezervo online" },
-      { name: "description", content: "KlinikÃ« dentare profesionale nÃ« Elbasan, drejtuar nga Dr. Xhensila Saraci. Rezervo terminin online 24/7, bisedo me recepsionistin virtual nÃ« shqip." },
+      { title: "Saraci Dental Clinic — Klinika dentare në Elbasan | Rezervo online" },
+      { name: "description", content: "Klinikë dentare profesionale në Elbasan, drejtuar nga Dr. Xhensila Saraci. Rezervo terminin online 24/7, bisedo me recepsionistin virtual në shqip." },
       { name: "keywords", content: "dentist elbasan, klinike dentare elbasan, saraci dental, xhensila saraci, rezervim online dentist, implante dhembesh elbasan" },
-      { property: "og:title", content: "Saraci Dental Clinic â€” Elbasan" },
-      { property: "og:description", content: "Rezervo terminin online. Chat & voice agjent nÃ« shqip. HÃ«nâ€“Sht 09â€“19." },
+      { property: "og:title", content: "Saraci Dental Clinic — Elbasan" },
+      { property: "og:description", content: "Rezervo terminin online. Chat & voice agjent në shqip. Hën–Sht 09–19." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
       { property: "og:image", content: heroAsset },
       { property: "og:locale", content: "sq_AL" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Saraci Dental Clinic â€” Elbasan" },
-      { name: "twitter:description", content: "Klinika juaj dentare nÃ« Elbasan. Rezervo online." },
+      { name: "twitter:title", content: "Saraci Dental Clinic — Elbasan" },
+      { name: "twitter:description", content: "Klinika juaj dentare në Elbasan. Rezervo online." },
       { name: "twitter:image", content: heroAsset },
     ],
     links: [{ rel: "canonical", href: SITE_URL }],
@@ -91,8 +91,8 @@ export const Route = createFileRoute("/")({
 function PublicHeader() {
   const [open, setOpen] = useState(false);
   const links = [
-    ["/sherbimet", "ShÃ«rbimet"],
-    ["/cmimet", "Ã‡mimet"],
+    ["/sherbimet", "Shërbimet"],
+    ["/cmimet", "Çmimet"],
     ["/galeria", "Para/pas"],
     ["/recensionet", "Recensionet"],
     ["/rreth", "Rreth nesh"],
@@ -142,14 +142,14 @@ function PublicFooter() {
             <div className="w-8 h-8 rounded-md bg-primary text-primary-foreground grid place-items-center font-display font-bold">S</div>
             <span className="font-display font-semibold">Saraci Dental</span>
           </div>
-          <p className="mt-3 text-muted-foreground">KlinikÃ« dentare nÃ« Elbasan, drejtuar nga {CLINIC.dentist}. Kujdes profesional, teknologji moderne.</p>
+          <p className="mt-3 text-muted-foreground">Klinikë dentare në Elbasan, drejtuar nga {CLINIC.dentist}. Kujdes profesional, teknologji moderne.</p>
         </div>
         <div>
           <div className="font-semibold mb-2">Klinika</div>
           <ul className="space-y-1.5 text-muted-foreground">
-            <li><Link to="/sherbimet" className="hover:text-foreground">ShÃ«rbimet</Link></li>
+            <li><Link to="/sherbimet" className="hover:text-foreground">Shërbimet</Link></li>
             <li><Link to="/rreth" className="hover:text-foreground">Rreth nesh</Link></li>
-            <li><Link to="/faq" className="hover:text-foreground">Pyetje tÃ« shpeshta</Link></li>
+            <li><Link to="/faq" className="hover:text-foreground">Pyetje të shpeshta</Link></li>
             <li><Link to="/kontakt" className="hover:text-foreground">Kontakt</Link></li>
           </ul>
         </div>
@@ -159,22 +159,22 @@ function PublicFooter() {
             <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> <a href={`tel:${CLINIC.phone}`} className="hover:text-foreground">{CLINIC.phoneDisplay}</a></li>
             <li className="flex items-center gap-2"><Mail className="w-4 h-4" /> <a href={`mailto:${CLINIC.email}`} className="hover:text-foreground break-all">{CLINIC.email}</a></li>
             <li className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0" /> {CLINIC.street}, {CLINIC.city}</li>
-            <li className="flex items-center gap-2"><Clock className="w-4 h-4" /> HÃ«nâ€“Sht 09:00â€“19:00</li>
+            <li className="flex items-center gap-2"><Clock className="w-4 h-4" /> Hën–Sht 09:00–19:00</li>
           </ul>
         </div>
         <div>
           <div className="font-semibold mb-2">Rezervo tani</div>
-          <p className="text-muted-foreground mb-2">Sistemi ynÃ« online punon 24/7.</p>
+          <p className="text-muted-foreground mb-2">Sistemi ynë online punon 24/7.</p>
           <Link to="/auth" search={{ mode: "register" } as never}><Button size="sm">Rezervo online</Button></Link>
           <a href={`https://wa.me/${CLINIC.whatsapp}`} target="_blank" rel="noopener" className="block mt-2 text-xs text-emerald-600 hover:underline">WhatsApp {CLINIC.phoneDisplay}</a>
         </div>
       </div>
       <div className="border-t border-border/60 py-4 text-center text-xs text-muted-foreground space-y-2">
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
-          <Link to="/privatesia" className="hover:text-foreground">Politika e privatÃ«sisÃ«</Link>
-          <Link to="/kushtet" className="hover:text-foreground">Kushtet e shÃ«rbimit</Link>
+          <Link to="/privatesia" className="hover:text-foreground">Politika e privatësisë</Link>
+          <Link to="/kushtet" className="hover:text-foreground">Kushtet e shërbimit</Link>
         </div>
-        <div>Â© {new Date().getFullYear()} Saraci Dental Clinic â€” {CLINIC.street}, {CLINIC.city}</div>
+        <div>© {new Date().getFullYear()} Saraci Dental Clinic — {CLINIC.street}, {CLINIC.city}</div>
       </div>
 
     </footer>
@@ -190,13 +190,13 @@ function Landing() {
         <div className="max-w-6xl mx-auto px-4 py-14 md:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-primary">
-              <Stethoscope className="w-3.5 h-3.5" /> Elbasan Â· ShqipÃ«ri
+              <Stethoscope className="w-3.5 h-3.5" /> Elbasan · Shqipëri
             </span>
             <h1 className="mt-4 font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-              BuzÃ«qeshja juaj,<br /><span className="text-primary">prioriteti ynÃ«</span>
+              Buzëqeshja juaj,<br /><span className="text-primary">prioriteti ynë</span>
             </h1>
             <p className="mt-5 text-lg text-foreground/80 max-w-lg">
-              Klinika e {CLINIC.dentist} nÃ« zemÃ«r tÃ« Elbasanit. Rezervo terminin online, ose bisedo me recepsionistin virtual nÃ« shqip â€” 24/7.
+              Klinika e {CLINIC.dentist} në zemër të Elbasanit. Rezervo terminin online, ose bisedo me recepsionistin virtual në shqip — 24/7.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link to="/auth" search={{ mode: "register" } as never}>
@@ -210,15 +210,15 @@ function Landing() {
               </a>
             </div>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-foreground/70">
-              <div className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> HÃ«nâ€“Sht 09â€“19</div>
+              <div className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> Hën–Sht 09–19</div>
               <div className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {CLINIC.street}</div>
-              <div className="flex items-center gap-1.5"><Star className="w-4 h-4 fill-amber-400 text-amber-400" /> 4.9 Â· 200+ pacientÃ«</div>
+              <div className="flex items-center gap-1.5"><Star className="w-4 h-4 fill-amber-400 text-amber-400" /> 4.9 · 200+ pacientë</div>
             </div>
           </div>
           <div className="relative">
             <img
               src={CLINIC.photos.hero}
-              alt={`${CLINIC.name} â€” klinika nÃ« ${CLINIC.street}, Elbasan`}
+              alt={`${CLINIC.name} — klinika në ${CLINIC.street}, Elbasan`}
               width={1080} height={720}
               className="rounded-2xl shadow-2xl w-full h-auto aspect-[3/2] object-cover"
             />
@@ -227,7 +227,7 @@ function Landing() {
                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="font-medium">Recepsionisti online</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">PÃ«rgjigjet nÃ« pak sekonda, nÃ« shqip.</p>
+              <p className="text-xs text-muted-foreground mt-1">Përgjigjet në pak sekonda, në shqip.</p>
             </Card>
           </div>
         </div>
@@ -237,11 +237,11 @@ function Landing() {
       <section className="max-w-6xl mx-auto px-4 py-10 md:py-14">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {[
-            [CLINIC.photos.room, "Ambienti i klinikÃ«s"],
-            [CLINIC.photos.team, "Ekipi ynÃ« nÃ« punÃ«"],
+            [CLINIC.photos.room, "Ambienti i klinikës"],
+            [CLINIC.photos.team, "Ekipi ynë në punë"],
             [CLINIC.photos.whitening, "Zbardhim profesional"],
             [CLINIC.photos.treatment, "Trajtim me kujdes"],
-            [CLINIC.photos.team2, "BashkÃ«punim mes dentistÃ«ve"],
+            [CLINIC.photos.team2, "Bashkëpunim mes dentistëve"],
             [CLINIC.photos.office, "Salloni kryesor"],
           ].map(([src, alt]) => (
             <div key={src} className="aspect-[4/5] rounded-xl overflow-hidden bg-muted">
@@ -253,17 +253,17 @@ function Landing() {
 
       <section className="max-w-6xl mx-auto px-4 py-14 md:py-20">
         <div className="text-center max-w-2xl mx-auto">
-          <h2 className="font-display text-3xl md:text-4xl">ShÃ«rbimet tona</h2>
-          <p className="mt-3 text-muted-foreground">Nga kontrolli rutinÃ« deri te implantologjia â€” gjithÃ§ka nÃ«n njÃ« kulm.</p>
+          <h2 className="font-display text-3xl md:text-4xl">Shërbimet tona</h2>
+          <p className="mt-3 text-muted-foreground">Nga kontrolli rutinë deri te implantologjia — gjithçka nën një kulm.</p>
         </div>
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            ["Kontroll & konsultÃ«", "VlerÃ«sim i plotÃ« dhe plan trajtimi personal."],
-            ["Pastrim profesional", "Heqje e gurÃ«zÃ«s me ultratinguj, pa dhimbje."],
-            ["Zbardhim profesional", "BuzÃ«qeshje mÃ« e ndritshme me llambÃ« LED."],
-            ["Mbushje estetike", "Kompozit i cilÃ«sisÃ« sÃ« lartÃ«, ngjyrÃ« natyrale."],
-            ["Endodonci", "Trajtim modern i kanaleve rrÃ«njore."],
-            ["Implantologji", "Zgjidhje afatgjata pÃ«r dhÃ«mbÃ« tÃ« munguar."],
+            ["Kontroll & konsultë", "Vlerësim i plotë dhe plan trajtimi personal."],
+            ["Pastrim profesional", "Heqje e gurëzës me ultratinguj, pa dhimbje."],
+            ["Zbardhim profesional", "Buzëqeshje më e ndritshme me llambë LED."],
+            ["Mbushje estetike", "Kompozit i cilësisë së lartë, ngjyrë natyrale."],
+            ["Endodonci", "Trajtim modern i kanaleve rrënjore."],
+            ["Implantologji", "Zgjidhje afatgjata për dhëmbë të munguar."],
           ].map(([t, d]) => (
             <Card key={t} className="p-5 bg-card-gradient hover:shadow-md transition-shadow">
               <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary grid place-items-center mb-3">
@@ -275,16 +275,16 @@ function Landing() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link to="/sherbimet"><Button variant="outline">Shiko tÃ« gjitha shÃ«rbimet</Button></Link>
+          <Link to="/sherbimet"><Button variant="outline">Shiko të gjitha shërbimet</Button></Link>
         </div>
       </section>
 
       <section className="bg-muted/30 py-14 md:py-20">
         <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-6">
           {[
-            [Shield, "HigjienÃ« europiane", "Sterilizim i Ã§ertifikuar dhe protokolle strikte."],
-            [Calendar, "Rezervim 24/7", "Online nÃ« pak sekonda, sloti fiks 1 orÃ«."],
-            [MessageCircle, "Recepsionist virtual", "Chat dhe zÃ« nÃ« shqip â€” natÃ« e ditÃ«."],
+            [Shield, "Higjienë europiane", "Sterilizim i çertifikuar dhe protokolle strikte."],
+            [Calendar, "Rezervim 24/7", "Online në pak sekonda, sloti fiks 1 orë."],
+            [MessageCircle, "Recepsionist virtual", "Chat dhe zë në shqip — natë e ditë."],
           ].map(([Icon, t, d]) => (
             <div key={t as string} className="text-center">
               <div className="w-14 h-14 rounded-2xl bg-primary text-primary-foreground grid place-items-center mx-auto shadow-lg">
@@ -297,17 +297,17 @@ function Landing() {
         </div>
       </section>
 
-      {/* BesueshmÃ«ria: vlerÃ«sime Google + kredencialet e mjekes */}
+      {/* Besueshmëria: vlerësime Google + kredencialet e mjekes */}
       <section className="max-w-6xl mx-auto px-4 py-14 md:py-20">
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="p-6">
             <div className="flex items-center gap-1 text-primary">
               {[0, 1, 2, 3, 4].map((i) => <Star key={i} className="w-5 h-5 fill-current" />)}
             </div>
-            <h2 className="mt-3 font-display text-2xl">VlerÃ«simet e pacientÃ«ve</h2>
+            <h2 className="mt-3 font-display text-2xl">Vlerësimet e pacientëve</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Lexoni pÃ«rvojat e pacientÃ«ve tanÃ« ose lini vlerÃ«simin tuaj pas vizitÃ«s.
-              Ne nuk publikojmÃ« dÃ«shmi pa pÃ«lqimin e pacientit.
+              Lexoni përvojat e pacientëve tanë ose lini vlerësimin tuaj pas vizitës.
+              Ne nuk publikojmë dëshmi pa pëlqimin e pacientit.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link to="/recensionet"><Button className="gap-2">Lexo recensionet <ArrowRight className="w-4 h-4" /></Button></Link>
@@ -319,7 +319,7 @@ function Landing() {
               rel="noopener noreferrer"
               className="mt-4 inline-flex"
             >
-              <Button variant="outline" className="gap-2">Shiko vlerÃ«simet nÃ« Google <ArrowRight className="w-4 h-4" /></Button>
+              <Button variant="outline" className="gap-2">Shiko vlerësimet në Google <ArrowRight className="w-4 h-4" /></Button>
             </a>
           </Card>
           <Card className="p-6">
@@ -328,19 +328,19 @@ function Landing() {
             </div>
             <h2 className="mt-3 font-display text-2xl">{CLINIC.dentist}</h2>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Mjeke stomatologe, pronare e klinikÃ«s nÃ« Elbasan</li>
+              <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Mjeke stomatologe, pronare e klinikës në Elbasan</li>
               <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Trajtime estetike, endodonci dhe implantologji</li>
               <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Protokolle sterilizimi sipas standardeve europiane</li>
-              <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" /> KonsultÃ« e shpjeguar me plan trajtimi dhe kosto paraprake</li>
+              <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Konsultë e shpjeguar me plan trajtimi dhe kosto paraprake</li>
             </ul>
-            <Link to="/rreth" className="mt-4 inline-flex"><Button variant="ghost" className="gap-2">MÃ« shumÃ« pÃ«r klinikÃ«n <ArrowRight className="w-4 h-4" /></Button></Link>
+            <Link to="/rreth" className="mt-4 inline-flex"><Button variant="ghost" className="gap-2">Më shumë për klinikën <ArrowRight className="w-4 h-4" /></Button></Link>
           </Card>
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-14 md:py-20 text-center">
-        <h2 className="font-display text-3xl md:text-4xl">Gati pÃ«r buzÃ«qeshjen tuaj?</h2>
-        <p className="mt-3 text-muted-foreground">Rezervo online tani ose bisedo me recepsionistin tonÃ« virtual â€” pÃ«rgjigjemi menjÃ«herÃ«.</p>
+        <h2 className="font-display text-3xl md:text-4xl">Gati për buzëqeshjen tuaj?</h2>
+        <p className="mt-3 text-muted-foreground">Rezervo online tani ose bisedo me recepsionistin tonë virtual — përgjigjemi menjëherë.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Link to="/auth" search={{ mode: "register" } as never}>
             <Button size="lg" className="gap-2">Rezervo terminin <ArrowRight className="w-4 h-4" /></Button>
